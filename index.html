@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuesto Personal - Sistema Mensual</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>Presupuesto Personal</div>
+            <div>
+                <select class="month-selector" id="monthSelector">
+                    <option value="2025-01">Enero 2025</option>
+                    <option value="2025-02">Febrero 2025</option>
+                    <option value="2025-03">Marzo 2025</option>
+                    <option value="2025-04">Abril 2025</option>
+                    <option value="2025-05">Mayo 2025</option>
+                    <option value="2025-06">Junio 2025</option>
+                    <option value="2025-07">Julio 2025</option>
+                    <option value="2025-08">Agosto 2025</option>
+                    <option value="2025-09">Septiembre 2025</option>
+                    <option value="2025-10">Octubre 2025</option>
+                    <option value="2025-11">Noviembre 2025</option>
+                    <option value="2025-12">Diciembre 2025</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="alerts"></div>
+
+        <!-- Resumen Principal -->
+        <div class="grid-container">
+            <div class="summary-box">
+                <div>Ingresos Totales</div>
+                <div class="summary-amount" id="totalIngresos">$0.00</div>
+            </div>
+            <div class="summary-box">
+                <div>Egresos Totales</div>
+                <div class="summary-amount" id="totalEgresos">$0.00</div>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <div class="balance">Saldo del Mes: <span id="saldoMes">$0.00</span></div>
+        </div>
+
+        <!-- Sección de Ingresos -->
+        <div class="section">
+            <div class="section-title">Resumen de Ingresos</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Presupuesto</th>
+                        <th>Real</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sueldo</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="sueldo_ppto">$0.00</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="sueldo">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Negocio</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="negocio_ppto">$0.00</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="negocio">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Otros</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="otros_ppto">$0.00</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="otros">$0.00</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Total</strong></td>
+                        <td class="amount"><strong id="totalIngresosPresupuesto">$0.00</strong></td>
+                        <td class="amount"><strong id="totalIngresosReal">$0.00</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sección de Egresos -->
+        <div class="section">
+            <div class="section-title">Resumen de Egresos</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Presupuesto</th>
+                        <th>Real</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gastos Fijos</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="gastos_fijos_ppto">$0.00</td>
+                        <td class="amount" id="gastosFijosTotal">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Gastos Extras</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="gastos_extras_ppto">$0.00</td>
+                        <td class="amount" id="gastosExtrasTotal">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Emergencias</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="emergencias_ppto">$0.00</td>
+                        <td class="amount" id="emergenciasTotal">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Ahorro</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="ahorro_ppto">$0.00</td>
+                        <td class="amount" id="ahorroTotal">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Deudas</td>
+                        <td class="amount editable-cell" contenteditable="true" data-category="deudas_ppto">$0.00</td>
+                        <td class="amount" id="deudasTotal">$0.00</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Total</strong></td>
+                        <td class="amount"><strong id="totalEgresosPresupuesto">$0.00</strong></td>
+                        <td class="amount"><strong id="totalEgresosReal">$0.00</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Grid de detalles -->
+        <div class="grid-details">
+            
+            <!-- Gastos Fijos -->
+            <div class="section">
+                <div class="section-title">Gastos Fijos</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Ppto</th>
+                            <th>Real</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Renta</td><td class="amount editable-cell" contenteditable="true" data-category="renta_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="renta">$0.00</td></tr>
+                        <tr><td>Teléfono</td><td class="amount editable-cell" contenteditable="true" data-category="telefono_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="telefono">$0.00</td></tr>
+                        <tr><td>Agua</td><td class="amount editable-cell" contenteditable="true" data-category="agua_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="agua">$0.00</td></tr>
+                        <tr><td>Luz</td><td class="amount editable-cell" contenteditable="true" data-category="luz_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="luz">$0.00</td></tr>
+                        <tr><td>Gasolina</td><td class="amount editable-cell" contenteditable="true" data-category="gasolina_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="gasolina">$0.00</td></tr>
+                        <tr><td>Estudio</td><td class="amount editable-cell" contenteditable="true" data-category="estudio_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="estudio">$0.00</td></tr>
+                        <tr><td>Gimnasio</td><td class="amount editable-cell" contenteditable="true" data-category="gym_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="gym">$0.00</td></tr>
+                        <tr><td>Suscripciones</td><td class="amount editable-cell" contenteditable="true" data-category="suscripciones_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="suscripciones">$0.00</td></tr>
+                        <tr class="total-row"><td><strong>Total</strong></td><td class="amount"><strong id="gastosFijosPresupuestoCalc">$0.00</strong></td><td class="amount"><strong id="gastosFijosTotalCalc">$0.00</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Gastos Extras -->
+            <div class="section">
+                <div class="section-title">Gastos Extras</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Ppto</th>
+                            <th>Real</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Salidas</td><td class="amount editable-cell" contenteditable="true" data-category="salidas_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="salidas">$0.00</td></tr>
+                        <tr><td>Regalos</td><td class="amount editable-cell" contenteditable="true" data-category="regalos_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="regalos">$0.00</td></tr>
+                        <tr class="total-row"><td><strong>Total</strong></td><td class="amount"><strong id="gastosExtrasPresupuestoCalc">$0.00</strong></td><td class="amount"><strong id="gastosExtrasTotalCalc">$0.00</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Emergencias -->
+            <div class="section">
+                <div class="section-title">Emergencias</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Ppto</th>
+                            <th>Real</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Salud</td><td class="amount editable-cell" contenteditable="true" data-category="salud_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="salud">$0.00</td></tr>
+                        <tr><td>Mecánico</td><td class="amount editable-cell" contenteditable="true" data-category="mecanico_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="mecanico">$0.00</td></tr>
+                        <tr><td>Reparaciones</td><td class="amount editable-cell" contenteditable="true" data-category="reparaciones_ppto">$0.00</td><td class="amount editable-cell" contenteditable="true" data-category="reparaciones">$0.00</td></tr>
+                        <tr class="total-row"><td><strong>Total</strong></td><td class="amount"><strong id="emergenciasPresupuestoCalc">$0.00</strong></td><td class="amount"><strong id="emergenciasTotalCalc">$0.00</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="action-buttons">
+            <button class="btn" onclick="saveData()">💾 Guardar Mes</button>
+            <button class="btn" onclick="exportJSON()">📄 Exportar JSON</button>
+            <button class="btn btn-secondary" onclick="importJSON()">📂 Importar JSON</button>
+            <button class="btn btn-secondary" onclick="showHistory()">📊 Historial</button>
+            <button class="btn btn-danger" onclick="clearData()">🗑️ Limpiar</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimir</button>
+        </div>
+
+        <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="handleFileImport(event)">
+
+        <!-- Historial Mejorado -->
+        <div id="historySection" class="section hidden">
+            <div class="section-title">📊 Historial de Presupuestos</div>
+            
+            <!-- Resumen del Historial -->
+            <div class="history-summary">
+                <div class="summary-card">
+                    <h4>Promedio Mensual</h4>
+                    <div class="summary-item">
+                        <span>Ingresos:</span>
+                        <span id="avgIngresos">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Egresos:</span>
+                        <span id="avgEgresos">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Saldo:</span>
+                        <span id="avgSaldo">$0.00</span>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <h4>Mejor Mes</h4>
+                    <div class="summary-item">
+                        <span>Período:</span>
+                        <span id="bestMonth">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Saldo:</span>
+                        <span id="bestBalance">$0.00</span>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <h4>Tendencias</h4>
+                    <div class="summary-item">
+                        <span>Meses registrados:</span>
+                        <span id="totalMonths">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Balance positivo:</span>
+                        <span id="positiveMonths">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista Detallada del Historial -->
+            <div class="history-detailed">
+                <h4>Detalle por Mes</h4>
+                <div id="historyList" class="history-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
